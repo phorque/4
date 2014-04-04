@@ -62,7 +62,7 @@ HTMLActuator.prototype.addTile = function (tile) {
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
-  if (tile.value > 2048) classes.push("tile-super");
+  if (tile.value > 4) classes.push("tile-super");
 
   this.applyClasses(wrapper, classes);
 
@@ -142,7 +142,6 @@ HTMLActuator.prototype.message = function (won) {
 
   this.clearContainer(this.sharingContainer);
   this.sharingContainer.appendChild(this.scoreTweetButton());
-  twttr.widgets.load();
 };
 
 HTMLActuator.prototype.clearMessage = function () {
@@ -155,13 +154,13 @@ HTMLActuator.prototype.scoreTweetButton = function () {
   var tweet = document.createElement("a");
   tweet.classList.add("twitter-share-button");
   tweet.setAttribute("href", "https://twitter.com/share");
-  tweet.setAttribute("data-via", "gabrielecirulli");
-  tweet.setAttribute("data-url", "http://git.io/2048");
-  tweet.setAttribute("data-counturl", "http://gabrielecirulli.github.io/2048/");
+  tweet.setAttribute("data-via", "phorque");
+  tweet.setAttribute("data-url", "http://phorque.github.io/4/");
+  tweet.setAttribute("data-counturl", "http://phorque.github.io/4/");
   tweet.textContent = "Tweet";
 
-  var text = "I scored " + this.score + " points at 2048, a game where you " +
-             "join numbers to score high! #2048game";
+  var text = "I scored " + this.score + " points at 4, a game where you " +
+             "join numbers to score high! #4game";
   tweet.setAttribute("data-text", text);
 
   return tweet;

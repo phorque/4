@@ -1,5 +1,6 @@
-function GameManager(size, InputManager, Actuator, StorageManager) {
-  this.size           = size; // Size of the grid
+function GameManager(xsize, ysize, InputManager, Actuator, StorageManager) {
+  this.xsize           = xsize; // Size of the grid
+  this.ysize           = ysize; // Size of the grid
   this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
@@ -20,7 +21,7 @@ GameManager.prototype.restart = function () {
   this.setup();
 };
 
-// Keep playing after winning (allows going over 2048)
+// Keep playing after winning (allows going over 4)
 GameManager.prototype.keepPlaying = function () {
   this.keepPlaying = true;
   this.actuator.continueGame(); // Clear the game won/lost message
@@ -48,7 +49,7 @@ GameManager.prototype.setup = function () {
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
   } else {
-    this.grid        = new Grid(this.size);
+    this.grid        = new Grid(this.xsize, this.ysize);
     this.score       = 0;
     this.over        = false;
     this.won         = false;
@@ -72,7 +73,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var value = 2;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -170,8 +171,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty 2048 tile
-          if (merged.value === 2048) self.won = true;
+          // The mighty 4 tile
+          if (merged.value === 4) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
@@ -185,10 +186,6 @@ GameManager.prototype.move = function (direction) {
 
   if (moved) {
     this.addRandomTile();
-
-    if (!this.movesAvailable()) {
-      this.over = true; // Game over!
-    }
 
     this.actuate();
   }
@@ -211,10 +208,13 @@ GameManager.prototype.getVector = function (direction) {
 GameManager.prototype.buildTraversals = function (vector) {
   var traversals = { x: [], y: [] };
 
-  for (var pos = 0; pos < this.size; pos++) {
+  for (var pos = 0; pos < this.xsize; pos++) {
     traversals.x.push(pos);
+  }
+  for (var pos = 0; pos < this.ysize; pos++) {
     traversals.y.push(pos);
   }
+
 
   // Always traverse from the farthest cell in the chosen direction
   if (vector.x === 1) traversals.x = traversals.x.reverse();
@@ -249,8 +249,8 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
   var tile;
 
-  for (var x = 0; x < this.size; x++) {
-    for (var y = 0; y < this.size; y++) {
+  for (var x = 0; x < this.xsize; x++) {
+    for (var y = 0; y < this.ysize; y++) {
       tile = this.grid.cellContent({ x: x, y: y });
 
       if (tile) {
