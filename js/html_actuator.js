@@ -155,7 +155,7 @@ HTMLActuator.prototype.scoreTweetButton = function () {
   var tweet = document.createElement("a");
   tweet.classList.add("twitter-share-button");
   tweet.setAttribute("href", "https://twitter.com/share");
-  tweet.setAttribute("data-via", "phorque");
+  tweet.setAttribute("data-via", "ph0rqu3");
   tweet.setAttribute("data-url", "http://phorque.github.io/4/");
   tweet.setAttribute("data-counturl", "http://phorque.github.io/4/");
   tweet.textContent = "Tweet";
