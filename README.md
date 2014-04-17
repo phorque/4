@@ -5,7 +5,7 @@
 ### Screenshot
 
 <p align="center">
-  <img src="http://pictures.gabrielecirulli.com/2048-20140309-234100.png" alt="Screenshot"/>
+  <img src="https://raw.githubusercontent.com/phorque/4/master/meta/front_image.png" alt="Screenshot"/>
 </p>
 
 That screenshot is fake, by the way. I never reached 4 :smile:
